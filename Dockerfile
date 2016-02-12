@@ -19,7 +19,7 @@ RUN set -x && \
   rm /var/cache/apk/*
 
 RUN set -x && \
-  curl -ssL "https://github.com/kreuzwerker/envplate/releases/download/v${ENVPLATE_VERSION}/ep-linux" -o /usr/local/bin/ep && \
+  wget -nv "https://github.com/kreuzwerker/envplate/releases/download/v${ENVPLATE_VERSION}/ep-linux" -O /usr/local/bin/ep && \
   chmod +x /usr/local/bin/ep && \
   ln -s /usr/local/bin/ep /usr/local/bin/envplate && \
 
