@@ -1,6 +1,7 @@
 FROM alpine:latest
 
-ENV LSTU_HOME /lstu
+ENV LSTU_HOME=/lstu \
+  ENVPLATE_VERSION=0.0.8
 
 RUN set -x && \
   apk add --update wget ca-certificates tar bash build-base perl perl-dev openssl-dev libidn-dev && \
@@ -16,6 +17,13 @@ RUN set -x && \
   rm -rf /root/.cpan && \
   rm -rf /root/.cpanm && \
   rm /var/cache/apk/*
+
+RUN set -x && \
+  curl -ssL "https://github.com/kreuzwerker/envplate/releases/download/v${ENVPLATE_VERSION}/ep-linux" -o /usr/local/bin/ep && \
+  chmod +x /usr/local/bin/ep && \
+  ln -s /usr/local/bin/ep /usr/local/bin/envplate && \
+
+COPY lstu.conf $LSTU_HOME/
 
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
