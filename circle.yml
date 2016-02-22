@@ -8,7 +8,7 @@ dependencies:
 
 test:
   override:
-    - docker run -d -p 8080:8080 -name lstu dakue/lstu
+    - docker run -d -p 8080:8080 --name lstu dakue/lstu
     - ( i=0; until nc -w 1 -q 0 localhost 8080; do echo $i; test $i -ge 5 && break; sleep 5; ((i++)); done ) || true
     - curl -sSL -I -X GET http://localhost:8080 | grep -q "200 OK"
     - if  [ ! -f .passed ]; then docker logs lstu; fi;
